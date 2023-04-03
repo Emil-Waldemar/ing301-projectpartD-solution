@@ -2,11 +2,13 @@ import logging
 import threading
 import time
 import random
+import math
 
 from messaging import SensorMeasurement
 
 # https://realpython.com/intro-to-python-threading/
 
+TEMP_RANGE = 40
 
 def sensor(measurement: SensorMeasurement):
 
@@ -14,7 +16,7 @@ def sensor(measurement: SensorMeasurement):
 
     while True:
 
-        temp = float(random.randint(-20, 20))
+        temp = math.sin(time.time() / 10) * TEMP_RANGE
 
         logging.info(f"Sensor: {temp}")
         measurement.set_temperature(temp)
