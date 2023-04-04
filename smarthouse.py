@@ -1,22 +1,12 @@
 # classes used in communication between device clients, the cloud service, and the application client
 
-class SensorMeasurement:
+import logging
 
-    def __init__(self, device_id):
-        self.did = device_id
-        self.temperature = None;
+from smarthouse_temperature_sensor import Sensor
+import common
 
-    def set_temperature(self, value):
-        self.temperature = value
+log_format = "%(asctime)s: %(message)s"
+logging.basicConfig(format=log_format, level=logging.INFO, datefmt = "%H:%M:%S")
 
-    def get_temperature(self):
-        return self.temperature
-
-
-    def to_json(self):
-        pass
-
-class ActuatorState:
-
-    state: str
-
+sensor = Sensor(common.TEMPERATURE_SENSOR_DID)
+sensor.run()

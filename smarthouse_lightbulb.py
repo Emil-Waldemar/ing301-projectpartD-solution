@@ -1,0 +1,3 @@
+class ActuatorState:
+
+    state: str

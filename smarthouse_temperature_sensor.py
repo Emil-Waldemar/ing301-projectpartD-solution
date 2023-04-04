@@ -4,51 +4,66 @@ import time
 import random
 import math
 
-from messaging import SensorMeasurement
-
 # https://realpython.com/intro-to-python-threading/
 
 TEMP_RANGE = 40
 
-def sensor(measurement: SensorMeasurement):
 
-    logging.info("Sensor starting")
+class SensorMeasurement:
 
-    while True:
+    def __init__(self):
+        self.temperature = None;
 
-        temp = math.sin(time.time() / 10) * TEMP_RANGE
+    def set_temperature(self, newvalue):
+        self.temperature = newvalue
 
-        logging.info(f"Sensor: {temp}")
-        measurement.set_temperature(temp)
-
-        time.sleep(2)
-
-
-def client(measurement: SensorMeasurement):
-
-    logging.info("Client starting")
-
-    while True:
-
-        logging.info(f"Client {measurement.get_temperature()}:")
-        time.sleep(4)
-
-    print("Client finishing")
+    def get_temperature(self):
+        return self.temperature
 
 
-if __name__ == '__main__':
+    def to_json(self):
+        pass
 
-    log_format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=log_format, level=logging.INFO, datefmt = "%H:%M:%S")
 
-    measurement = SensorMeasurement(1)
+class Sensor:
 
-    # start threads corresponding to physical device similator
-    sensor_thread = threading.Thread(target=sensor, args=(measurement,))
-    client_thread = threading.Thread(target=client, args=(measurement,))
+    def __init__(self, did):
+        self.did = did
+        self.measurement = SensorMeasurement()
 
-    sensor_thread.start()
-    client_thread.start()
+    def simulator(self):
+
+        logging.info(f"Sensor {self.did} starting")
+
+        while True:
+
+            temp = math.sin(time.time() / 10) * TEMP_RANGE
+
+            logging.info(f"Sensor {self.did}: {temp}")
+            self.measurement.set_temperature(temp)
+
+            time.sleep(2)
+
+    def client(self):
+
+        logging.info(f"Client {self.did} starting")
+
+        while True:
+
+            logging.info(f"Client {self.did} {self.measurement.get_temperature()}:")
+            time.sleep(4)
+
+        logging.info(f"Client {self.did} finishing")
+
+    def run(self):
+
+        # start thread simulating physical temperature sensor
+        sensor_thread = threading.Thread(target=self.simulator)
+        sensor_thread.start()
+
+        # start thread sending temperature to the cloud
+        client_thread = threading.Thread(target=self.client)
+        client_thread.start()
 
 
 
