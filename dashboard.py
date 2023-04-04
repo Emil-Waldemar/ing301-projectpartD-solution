@@ -1,24 +1,41 @@
-from tkinter import *
+import tkinter as tk
+from tkinter import ttk
+
+# https://www.pythontutorial.net/tkinter/
+
+# root window
+root = tk.Tk()
+
+# configure the root window
+
+root.geometry('300x200')
+root.resizable(False, False)
+root.title('ING301 SmartHouse Dashboard')
+
+# label frame
+
+
+
+lf = ttk.LabelFrame(root, text='Heat Oven [X]')
+lf.grid(column=0, row=0, padx=20, pady=20)
+
+heater_state_var = tk.StringVar()
+heater_state_var.set('Off')
+
+heater_states = ('On', 'Off')
 
 
 def sel():
-    selection = "You selected the option " + str(var.get())
-    label.config(text = selection)
+    selection = "You selected the option " + heater_state_var.get()
+    print(selection)
 
 
-root = Tk()
-var = IntVar()
-R1 = Radiobutton(root, text="Option 1", variable=var, value=1, command=sel)
+# create radio buttons and place them on the label frame
+on_radio = ttk.Radiobutton(lf, text='On', value='On', variable=heater_state_var, command = sel)
+on_radio.grid(column=0, row=0, ipadx=10, ipady=10)
 
-R1.pack(anchor=W)
+off_radio = ttk.Radiobutton(lf, text='Off', value='Off', variable=heater_state_var, command = sel)
+off_radio.grid(column=1, row=0, ipadx=10, ipady=10)
 
-R2 = Radiobutton(root, text="Option 2", variable=var, value=2, command=sel)
 
-R2.pack(anchor=W)
-
-R3 = Radiobutton(root, text="Option 3", variable=var, value=3, command=sel)
-R3.pack(anchor=W)
-
-label = Label(root)
-label.pack()
 root.mainloop()
