@@ -1,63 +1,20 @@
 import tkinter as tk
-from tkinter import ttk
 
-# https://www.pythontutorial.net/tkinter/
+from dashboard_lightbulb import init_lightbulb
+from dashboard_temperaturesensor import init_temperaturesensor
 
-# root window
+# root/main window
+
 root = tk.Tk()
-
-# configure the root window
-
 root.geometry('300x300')
-#root.resizable(True, True)
 root.title('ING301 SmartHouse Dashboard')
 
-# HeatOven control
+LIGHTBULB_DID = 1
+TEMPERATURE_SENSOR_DID = 8
 
-hc_lf = ttk.LabelFrame(root, text='Heat Oven [X]')
-hc_lf.grid(column=0, row=0, padx=20, pady=20, sticky=tk.W)
-
-heater_state_var = tk.StringVar()
-heater_state_var.set('Off')
-
-heater_states = ('On', 'Off')
-
-
-def heater_cmd():
-    selection = "You selected the option " + heater_state_var.get()
-    print(selection)
-
-
-on_radio = ttk.Radiobutton(hc_lf, text='On', value='On', variable=heater_state_var, command=heater_cmd)
-on_radio.grid(column=0, row=0, ipadx=10, ipady=10)
-
-off_radio = ttk.Radiobutton(hc_lf, text='Off', value='Off', variable=heater_state_var, command=heater_cmd)
-off_radio.grid(column=1, row=0, ipadx=10, ipady=10)
-
-# Temperature sensor control
-
-ts_lf = ttk.LabelFrame(root, text='Temperature sensor [X]')
-
-ts_lf.grid(column=0, row=1, padx=20, pady=20, sticky=tk.W)
-
-temp = tk.Text(ts_lf, height=1, width=10)
-temp['state'] = 'disabled'
-temp.grid(column=0, row=0, padx=20, pady=20)
-
-
-def refresh_temp():
-    print("Refresh")
-
-
-refresh_button = ttk.Button(
-    ts_lf,
-    text='Refresh',
-    command=refresh_temp
-)
-
-refresh_button.grid(column=1, row=0, padx=20, pady=20)
-
-#label = ttk.Label(ts_lf, text='This is a label')
-#label.grid(column=1, row=0, ipadx=10, ipady=10)
+init_lightbulb(root, LIGHTBULB_DID)
+init_temperaturesensor(root, TEMPERATURE_SENSOR_DID)
 
 root.mainloop()
+
+# https://www.pythontutorial.net/tkinter/
