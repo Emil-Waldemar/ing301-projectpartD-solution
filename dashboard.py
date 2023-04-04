@@ -1,9 +1,14 @@
 import tkinter as tk
 
+import logging
+
 from dashboard_lightbulb import init_lightbulb
 from dashboard_temperaturesensor import init_temperaturesensor
 
 # root/main window
+
+log_format = "%(asctime)s: %(message)s"
+logging.basicConfig(format=log_format, level=logging.INFO, datefmt="%H:%M:%S")
 
 root = tk.Tk()
 root.geometry('300x300')

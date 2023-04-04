@@ -1,15 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
-
-
-def lightbulb_cmd_on():
-
-    print("ON")
+import logging
 
 
 def lightbulb_cmd(state):
 
-    print(state.get())
+    logging.info(state.get())
 
 
 def init_lightbulb(container, did):
