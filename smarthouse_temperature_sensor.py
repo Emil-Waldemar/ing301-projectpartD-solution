@@ -1,35 +1,18 @@
 import logging
 import threading
 import time
-import random
 import math
 
-# https://realpython.com/intro-to-python-threading/
+from messaging import SensorMeasurement
 
 TEMP_RANGE = 40
-
-
-class SensorMeasurement:
-
-    def __init__(self):
-        self.temperature = None;
-
-    def set_temperature(self, newvalue):
-        self.temperature = newvalue
-
-    def get_temperature(self):
-        return self.temperature
-
-
-    def to_json(self):
-        pass
 
 
 class Sensor:
 
     def __init__(self, did):
         self.did = did
-        self.measurement = SensorMeasurement()
+        self.measurement = SensorMeasurement('0.0')
 
     def simulator(self):
 
@@ -37,20 +20,20 @@ class Sensor:
 
         while True:
 
-            temp = math.sin(time.time() / 10) * TEMP_RANGE
+            temp = round(math.sin(time.time() / 10) * TEMP_RANGE,1)
 
             logging.info(f"Sensor {self.did}: {temp}")
-            self.measurement.set_temperature(temp)
+            self.measurement.set_temperature(str(temp))
 
             time.sleep(2)
 
     def client(self):
 
-        logging.info(f"Client {self.did} starting")
+        logging.info(f"Sensor Client {self.did} starting")
 
         while True:
 
-            logging.info(f"Client {self.did} {self.measurement.get_temperature()}:")
+            logging.info(f"Sensor Client {self.did} {self.measurement.get_temperature()}")
             time.sleep(4)
 
         logging.info(f"Client {self.did} finishing")
