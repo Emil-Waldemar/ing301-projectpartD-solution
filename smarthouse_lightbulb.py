@@ -4,6 +4,7 @@ import time
 import requests
 
 from messaging import ActuatorState
+import common
 
 
 class Actuator:
@@ -20,13 +21,16 @@ class Actuator:
 
             logging.info(f"Actuator {self.did}: {self.state.state}")
 
-            time.sleep(1)
+            time.sleep(common.ACTUATOR_SIMULATOR_SLEEP_TIME)
 
     def client(self):
 
         logging.info(f"Actuator Client {self.did} starting")
 
-        url = "http://localhost:8000/smarthouse/actuator/1/current"
+        # TODO START
+        # send request to cloud service with regular intervals to obtain actuator state
+
+        url = common.BASE_URL + f"actuator/{self.did}/current"
 
         payload = {}
         headers = {}
@@ -38,11 +42,15 @@ class Actuator:
             self.state = ActuatorState.from_json(response.text)
 
             logging.info(f"Actuator Client {self.did} {self.state.state}")
-            time.sleep(4)
+            time.sleep(common.LIGHTBULB_CLIENT_SLEEP_TIME)
 
         logging.info(f"Client {self.did} finishing")
 
+        # TODO END
+
     def run(self):
+
+        # TODO START
 
         # start thread simulating physical light bulb
         sensor_thread = threading.Thread(target=self.simulator)
@@ -52,5 +60,6 @@ class Actuator:
         client_thread = threading.Thread(target=self.client)
         client_thread.start()
 
+        # TODO END
 
 
