@@ -21,7 +21,7 @@ class Actuator:
 
             logging.info(f"Actuator {self.did}: {self.state.state}")
 
-            time.sleep(common.ACTUATOR_SIMULATOR_SLEEP_TIME)
+            time.sleep(common.LIGHTBULB_SIMULATOR_SLEEP_TIME)
 
     def client(self):
 

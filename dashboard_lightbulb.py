@@ -50,6 +50,6 @@ def init_lightbulb(container, did):
 
     off_radio = ttk.Radiobutton(lb_lf, text='Off', value='Off',
                                 variable=lightbulb_state_var,
-                                command=lambda: lightbulb_cmd(lightbulb_state_var))
+                                command=lambda: lightbulb_cmd(lightbulb_state_var, did))
 
     off_radio.grid(column=1, row=0, ipadx=10, ipady=10)
