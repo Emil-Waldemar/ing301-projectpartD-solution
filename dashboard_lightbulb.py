@@ -1,19 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
 import logging
-
 import requests
+
 from messaging import ActuatorState
+import common
 
 
-CONNECTED = True
-
-
-def lightbulb_cmd(state):
+def lightbulb_cmd(state, did):
 
     new_state = state.get()
 
     logging.info(f"Dashboard: {new_state}")
+
+    # TODO START
+    # send HTTP request with new actuator state to cloud service
 
     if state.get() == 'On':
         new_state = True
@@ -24,15 +25,13 @@ def lightbulb_cmd(state):
 
     payload = actuator_state.to_json()
 
-    #payload = json.dumps({"state": "False"})
-
     headers = {'Content-Type': 'application/json'}
 
-    url = "http://localhost:8000/smarthouse/actuator/1/current"
+    url = common.BASE_URL + f"actuator/{did}/current"
 
     response = requests.request("PUT", url, headers=headers, data=payload)
 
-    print(response.text)
+    # TODO: END
 
 
 def init_lightbulb(container, did):
@@ -45,7 +44,7 @@ def init_lightbulb(container, did):
 
     on_radio = ttk.Radiobutton(lb_lf, text='On', value='On',
                                variable=lightbulb_state_var,
-                               command=lambda: lightbulb_cmd(lightbulb_state_var))
+                               command=lambda: lightbulb_cmd(lightbulb_state_var, did))
 
     on_radio.grid(column=0, row=0, ipadx=10, ipady=10)
 
@@ -54,5 +53,3 @@ def init_lightbulb(container, did):
                                 command=lambda: lightbulb_cmd(lightbulb_state_var))
 
     off_radio.grid(column=1, row=0, ipadx=10, ipady=10)
-
-    # lightbulb_state_var.set('Off')

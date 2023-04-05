@@ -4,7 +4,7 @@ import tkinter as tk
 import logging
 
 from dashboard_lightbulb import init_lightbulb
-from dashboard_temperaturesensor import init_temperaturesensor
+from dashboard_temperaturesensor import init_temperature_sensor
 
 import common
 
@@ -16,6 +16,6 @@ root.geometry('300x300')
 root.title('ING301 SmartHouse Dashboard')
 
 init_lightbulb(root, common.LIGHTBULB_DID)
-init_temperaturesensor(root, common.TEMPERATURE_SENSOR_DID)
+init_temperature_sensor(root, common.TEMPERATURE_SENSOR_DID)
 
 root.mainloop()

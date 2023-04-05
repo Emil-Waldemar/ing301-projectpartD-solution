@@ -5,13 +5,17 @@ import logging
 import requests
 
 from messaging import SensorMeasurement
+import common
 
 
-def refresh_btn_cmd(temp_widget):
+def refresh_btn_cmd(temp_widget, did):
 
     logging.info("Temperature refresh")
 
-    url = "http://localhost:8000/smarthouse/sensor/8/current"
+    # TODO START
+    # send request to cloud service to obtain current temperature
+
+    url = common.BASE_URL + f"sensor/{did}/current"
 
     payload = {}
     headers = {}
@@ -19,14 +23,18 @@ def refresh_btn_cmd(temp_widget):
     response = requests.request("GET", url, headers=headers, data=payload)
 
     sensor_measurement = SensorMeasurement.from_json(response.text)
+    # sensor_measurement = None # replace with measurement from request
 
-    temp_widget['state'] = 'normal'
+    # TODO END
+
+    # update the text field in the user interface
+    temp_widget['state'] = 'normal' # to allow text to be changed
     temp_widget.delete(1.0, 'end')
     temp_widget.insert(1.0, sensor_measurement.value)
     temp_widget['state'] = 'disabled'
 
 
-def init_temperaturesensor(container, did):
+def init_temperature_sensor(container, did):
 
     ts_lf = ttk.LabelFrame(container, text=f'Temperature sensor [{did}]')
 
@@ -36,12 +44,9 @@ def init_temperaturesensor(container, did):
     temp.insert(1.0, 'None')
     temp['state'] = 'disabled'
 
-    # temp = tk.Label(ts_lf, text='None')
     temp.grid(column=0, row=0, padx=20, pady=20)
 
-    # temp.insert('1.0', 'None')
-
     refresh_button = ttk.Button(ts_lf, text='Refresh',
-                                command=lambda: refresh_btn_cmd(temp))
+                                command=lambda: refresh_btn_cmd(temp, did))
 
     refresh_button.grid(column=1, row=0, padx=20, pady=20)
