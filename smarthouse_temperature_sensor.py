@@ -2,6 +2,7 @@ import logging
 import threading
 import time
 import math
+import requests
 
 from messaging import SensorMeasurement
 
@@ -34,6 +35,19 @@ class Sensor:
         while True:
 
             logging.info(f"Sensor Client {self.did} {self.measurement.get_temperature()}")
+
+            url = "http://localhost:8000/smarthouse/sensor/8/current"
+
+            payload = self.measurement.to_json();
+
+            headers = {
+                'Content-Type': 'application/json'
+            }
+
+            response = requests.request("POST", url, headers=headers, data=payload)
+
+            #print(response.text)
+
             time.sleep(4)
 
         logging.info(f"Client {self.did} finishing")
