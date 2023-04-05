@@ -4,7 +4,7 @@ import json
 class SensorMeasurement:
 
     def __init__(self, init_value):
-        self.value = init_value;
+        self.value = init_value
 
     def set_temperature(self, new_value):
         self.value = new_value
@@ -15,6 +15,18 @@ class SensorMeasurement:
     def to_json(self):
         sensor_measurement_encoded = json.dumps(self.__dict__)
         return sensor_measurement_encoded
+
+    @staticmethod
+    def json_decoder(json_sensor_measurement_dict):
+        return SensorMeasurement(json_sensor_measurement_dict['value'])
+
+    @staticmethod
+    def from_json(json_sensor_measurement_str: str):
+
+        json_sensor_measurement_dict = json.loads(json_sensor_measurement_str)
+        actuator_state = SensorMeasurement.json_decoder(json_sensor_measurement_dict)
+
+        return actuator_state
 
 
 class ActuatorState:
@@ -31,9 +43,9 @@ class ActuatorState:
         return ActuatorState(json_actuator_state_dict['state'])
 
     @staticmethod
-    def from_json(json_gps_point_str: str):
+    def from_json(json_actuator_state_str: str):
 
-        json_actuator_state_dict = json.loads(json_gps_point_str)
+        json_actuator_state_dict = json.loads(json_actuator_state_str)
         actuator_state = ActuatorState.json_decoder(json_actuator_state_dict)
 
         return actuator_state

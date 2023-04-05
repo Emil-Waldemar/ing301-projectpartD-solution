@@ -2,16 +2,28 @@ import tkinter as tk
 from tkinter import ttk
 
 import logging
+import requests
+
+from messaging import SensorMeasurement
 
 
 def refresh_btn_cmd(temp_widget):
 
     logging.info("Temperature refresh")
+
+    url = "http://localhost:8000/smarthouse/sensor/8/current"
+
+    payload = {}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    sensor_measurement = SensorMeasurement.from_json(response.text)
+
     temp_widget['state'] = 'normal'
     temp_widget.delete(1.0, 'end')
-    temp_widget.insert(1.0, 'Refresh')
+    temp_widget.insert(1.0, sensor_measurement.value)
     temp_widget['state'] = 'disabled'
-
 
 
 def init_temperaturesensor(container, did):
