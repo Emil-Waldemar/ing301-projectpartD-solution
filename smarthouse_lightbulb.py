@@ -1,7 +1,7 @@
 import logging
 import threading
 import time
-import math
+import requests
 
 from messaging import ActuatorState
 
@@ -26,9 +26,16 @@ class Actuator:
 
         logging.info(f"Actuator Client {self.did} starting")
 
+        url = "http://localhost:8000/smarthouse/actuator/1/current"
+
+        payload = {}
+        headers = {}
+
         while True:
 
-            # TODO - read from cloud service
+            response = requests.request("GET", url, headers=headers, data=payload)
+
+            self.state = ActuatorState.from_json(response.text)
 
             logging.info(f"Actuator Client {self.did} {self.state.state}")
             time.sleep(4)
