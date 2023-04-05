@@ -75,3 +75,15 @@ Følgende skal leveres
 
 - Linke til github repository med implemetasjon av tjenesten
 - Screen-shot som viser dashboard- og smarthusapplikasjonen
+
+## Videre arbeid
+
+Smarthus prosjketet kan utvikles videre i ulike retninger for de som måtte a lyst til dette
+
+- integrere database-løsningen fra Del B inn i det totale systemet
+- Sette opp eks. Arduino/Raspberry Pi enheter for å få faktiske fysiske sensorer og aktuatorer
+- Generalisere dashboard slik det kan lese inn en konfigurasjon av enheter fra sky-tjenesten
+- Utvikle protokoll for registering av nye enheter i smarthuset
+- Digital tvilling som viser romslig plassering av enheter samt målinger og tilstander
+- Legge til sikkerhet
+- Sette sky-tjenesten i drift på Azure, AWS, GCP eller tilsvarende
