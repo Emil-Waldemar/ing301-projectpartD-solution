@@ -58,7 +58,7 @@ class Sensor:
         sensor_thread = threading.Thread(target=self.simulator)
         sensor_thread.start()
 
-        # start thread sending temperature to the cloud
+        # start thread sending temperature to the cloud service
         client_thread = threading.Thread(target=self.client)
         client_thread.start()
 
