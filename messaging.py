@@ -22,6 +22,10 @@ class ActuatorState:
     def __init__(self, init_state):
         self.state = init_state
 
+    def to_json(self):
+        actuator_state_encoded = json.dumps(self.__dict__)
+        return actuator_state_encoded
+
     @staticmethod
     def json_decoder(json_actuator_state_dict):
         return ActuatorState(json_actuator_state_dict['state'])

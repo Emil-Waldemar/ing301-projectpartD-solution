@@ -2,10 +2,37 @@ import tkinter as tk
 from tkinter import ttk
 import logging
 
+import requests
+from messaging import ActuatorState
+
+
+CONNECTED = True
+
 
 def lightbulb_cmd(state):
 
-    logging.info(state.get())
+    new_state = state.get()
+
+    logging.info(f"Dashboard: {new_state}")
+
+    if state.get() == 'On':
+        new_state = True
+    else:
+        new_state = False
+
+    actuator_state = ActuatorState(new_state)
+
+    payload = actuator_state.to_json()
+
+    #payload = json.dumps({"state": "False"})
+
+    headers = {'Content-Type': 'application/json'}
+
+    url = "http://localhost:8000/smarthouse/actuator/1/current"
+
+    response = requests.request("PUT", url, headers=headers, data=payload)
+
+    print(response.text)
 
 
 def init_lightbulb(container, did):
