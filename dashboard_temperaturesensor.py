@@ -23,7 +23,9 @@ def refresh_btn_cmd(temp_widget, did):
     response = requests.request("GET", url, headers=headers, data=payload)
 
     sensor_measurement = SensorMeasurement.from_json(response.text)
-    # sensor_measurement = None # replace with measurement from request
+
+    # replace statement below with measurement from response
+    # sensor_measurement = SensorMeasurement(init_value="-273.15")
 
     # TODO END
 
