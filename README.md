@@ -60,7 +60,15 @@ Følgende skal implementeres:
 
 - I filen `smarthouse_temperature.py` skal dere i `Sensor`-klassen implementere metoden `client` som skal levere temperaturen til sky-tjenesten med passende antall sekunders intervall. Videre skal dere implementere `run`-metoden som skal start en ny tråd som kjører `simulator`-metoden og en tråd som kjører `client`-metoden.
 
-`Sensor` og `Actuator`-klassen er følger den samme modellen ved å ha en `client`-metode som kjører i en tråd og ivaretar kommunikasjon med sky-tjenesten og en `simulator`-metode som simmulerer den fysisks enheten som ligger til grunn.
+`Sensor` og `Actuator`-klassen følger den samme modellen ved å ha en `client`-metode som kjører i en tråd og ivaretar kommunikasjon med sky-tjenesten og en `simulator`-metode som kjører i en annen tråd og simulerer den fysisks enheten som ligger til grunn.
+
+Denne tutorial inneholder en mer grunnleggende introduksjon til tråd-programmering:
+
+https://superfastpython.com/threading-in-python/ 
+
+og spesielt kan dere lese om hvordan en metode/funksjon kan kjøres i en egen tråd her:
+
+https://superfastpython.com/threading-in-python/#Example_of_Running_a_Function_in_a_Thread
 
 ## Test av systemet
 

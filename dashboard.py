@@ -1,5 +1,4 @@
-import tkinter as tk
-# https://www.pythontutorial.net/tkinter/
+import tkinter as tk # https://www.pythontutorial.net/tkinter/
 
 import logging
 
